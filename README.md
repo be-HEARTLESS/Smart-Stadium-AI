@@ -1,5 +1,8 @@
 # 🏟 Smart Stadium AI Assistant
 
+## 🌐 Live Demo
+https://be-HEARTLESS.github.io/Smart-Stadium-AI/
+
 > Navigate smarter. Skip crowds.
 
 Built as part of the **PromptWars challenge**, this project focuses on improving the physical event experience in large stadiums using AI-driven decision making.
