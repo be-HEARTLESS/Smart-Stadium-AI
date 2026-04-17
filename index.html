@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Stadium AI - Navigate Smarter</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <span class="logo-icon">🏟</span>
+            <div class="logo-text">
+                <h1>Smart Stadium AI</h1>
+                <p class="tagline">Navigate smarter. Skip crowds.</p>
+            </div>
+        </div>
+        <div class="status-indicator">
+            <span class="pulse"></span>
+            <span>Live</span>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+
+        <!-- Route Planner Card -->
+        <section class="card route-card">
+            <div class="card-header">
+                <div class="card-icon">🧭</div>
+                <h2>Smart Route Planner</h2>
+            </div>
+            <div class="card-body">
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <span class="input-icon">📍</span>
+                        <input type="text" id="from" placeholder="From (e.g., Gate 2)" autocomplete="off">
+                    </div>
+                    <div class="input-divider">→</div>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🎯</span>
+                        <input type="text" id="to" placeholder="To (e.g., Seat B12)" autocomplete="off">
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="findRoute()" aria-label="Find smart route">
+                    <span>Find Smart Route</span>
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </button>
+                <div id="routeResult" class="result-box">
+                    <div class="result-placeholder">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                        <p>Enter your locations to get the optimal route</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Assistant Card -->
+        <section class="card assistant-card">
+            <div class="card-header">
+                <div class="card-icon">🤖</div>
+                <h2>AI Assistant</h2>
+            </div>
+            <div class="card-body">
+                <div class="chat-container">
+                    <div id="chatHistory" class="chat-history">
+                        <div class="message bot-message">
+                            <div class="message-avatar">🤖</div>
+                            <div class="message-content">
+                                <p>Hello! I'm your stadium assistant. Ask me about:</p>
+                                <ul>
+                                    <li>📍 Least crowded gates</li>
+                                    <li>🍔 Food stall wait times</li>
+                                    <li>🚻 Washroom locations</li>
+                                    <li>🚨 Emergency exits</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input-wrapper">
+                        <input type="text" id="query" placeholder="Ask something..." autocomplete="off">
+<button class="btn-send" onclick="askAI()" aria-label="Send message">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Status Card -->
+        <section class="card status-card">
+            <div class="card-header">
+                <div class="card-icon">📊</div>
+                <h2>Live Stadium Status</h2>
+            </div>
+            <div class="card-body">
+                <div class="status-grid">
+                    <div class="status-item" data-gate="Gate 1">
+                        <div class="status-header">
+                            <span class="gate-name">Gate 1</span>
+                            <span class="status-dot"></span>
+                        </div>
+                        <div class="crowd-meter">
+                            <div class="meter-fill" id="meter-g1"></div>
+                        </div>
+                        <div class="crowd-value">
+                            <span id="g1">30</span>
+                        </div>
+                    </div>
+                    <div class="status-item" data-gate="Gate 2">
+                        <div class="status-header">
+                            <span class="gate-name">Gate 2</span>
+                            <span class="status-dot"></span>
+                        </div>
+                        <div class="crowd-meter">
+                            <div class="meter-fill" id="meter-g2"></div>
+                        </div>
+                        <div class="crowd-value">
+                            <span id="g2">80</span>
+                        </div>
+                    </div>
+                    <div class="status-item" data-gate="Gate 3">
+                        <div class="status-header">
+                            <span class="gate-name">Gate 3</span>
+                            <span class="status-dot"></span>
+                        </div>
+                        <div class="crowd-meter">
+                            <div class="meter-fill" id="meter-g3"></div>
+                        </div>
+                        <div class="crowd-value">
+                            <span id="g3">20</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="alertBox" class="alert-box">
+                    <div class="alert-icon">⚠️</div>
+                    <div class="alert-content">
+                        <strong>Alert:</strong>
+                        <span id="alertText">Gate 2 is highly crowded (80%)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Card -->
+        <section class="card map-card">
+            <div class="card-header">
+                <div class="card-icon">🗺️</div>
+                <h2>Stadium Map</h2>
+            </div>
+            <div class="card-body">
+                <div class="map-wrapper">
+                    <iframe 
+                        width="100%" 
+                        height="300" 
+                        style="border:0; border-radius:12px;" 
+                        loading="lazy" 
+                        allowfullscreen
+                        src="https://www.google.com/maps?q=Eden+Gardens+Kolkata&output=embed">
+                    </iframe>
+                </div>
+                <div class="map-overlay">
+                    <div class="overlay-item">
+                        <span class="overlay-icon">📍</span>
+                        <span>Eden Gardens, Kolkata</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <div class="toast-content">
+            <span class="toast-icon">✓</span>
+            <span class="toast-message">Route calculated successfully!</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
